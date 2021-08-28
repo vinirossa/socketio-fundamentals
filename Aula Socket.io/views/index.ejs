@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Socket.io</title>
+</head>
+
+<body>
+    <input type="text" id="word" oninput="enviar()">
+    <button onclick="enviar()">Enviar</button>
+    <hr>
+    <p id="result"></p>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.4/socket.io.js"></script>
+<script>
+    var socket = io()
+    socket.on('disconnect', () => {
+        console.log("Desconectado")
+    })
+
+    function enviar() {
+        var input = document.getElementById("word")
+        socket.emit('word', input.value)
+    }
+
+    socket.on("result", (data) => {
+        console.log(data)
+        document.getElementById("result").innerHTML = data
+    })
+</script>
+
+</html>
